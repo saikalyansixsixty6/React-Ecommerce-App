@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth,fireDB} from "../../firebase/FirebaseConfig";
 import {Timestamp, addDoc,collection } from "firebase/firestore";
-import {Loader} from "../components/loader/Loader"
+import Loader from "../../components/loader/Loader";
 
 function Signup() {
     const [name, setName] = useState("");
