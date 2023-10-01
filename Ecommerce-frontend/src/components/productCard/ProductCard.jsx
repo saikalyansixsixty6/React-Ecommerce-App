@@ -1,12 +1,30 @@
 
 
 
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import myContext from '../../context/data/myContext'
+import {useDispatch, useSelector} from "react-redux"
+import { addToCart } from '../../redux/cartSlice'
+import {toast} from "react-toastify"
 
 function ProductCard() {
     const context = useContext(myContext)
     const { mode,product} = context
+
+    const dispatch = useDispatch()
+    const cartItems = useSelector((state) =>state.cart)
+    console.log(cartItems)
+
+    
+
+    const addCart = (product) =>{
+         dispatch(addToCart(product))
+         toast.success("add to cart")
+    }
+    useEffect(() => {
+        localStorage.setItem('cart', JSON.stringify(cartItems));
+    }, [cartItems])
+
     return (
         <section className="text-gray-600 body-font">
             <div className="container px-5 py-8 md:py-16 mx-auto">
@@ -32,7 +50,7 @@ function ProductCard() {
                                 {/* <p className="leading-relaxed mb-3">{item.description.}</p> */}
                                 <p className="leading-relaxed mb-3" style={{ color: mode === 'dark' ? 'white' : '' }}>₹ {price}</p>
                                 <div className=" flex justify-center">
-                                    <button type="button" className="focus:outline-none text-white bg-pink-600 hover:bg-pink-700 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm w-full  py-2">Add To Cart</button>
+                                    <button onClick={() =>addCart(item)} type="button" className="focus:outline-none text-white bg-pink-600 hover:bg-pink-700 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm w-full  py-2">Add To Cart</button>
 
                                 </div>
                             </div>
