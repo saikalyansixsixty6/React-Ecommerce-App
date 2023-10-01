@@ -16,6 +16,7 @@ function AddProduct() {
                     <div className="">
                         <h1 className='text-center text-white text-xl mb-4 font-bold'>Add Product</h1>
                     </div>
+
                     <div>
                         <input type="text"
                             value={products.title}
@@ -61,6 +62,7 @@ function AddProduct() {
 
                        </textarea>
                     </div>
+                    
                     <div className=' flex justify-center mb-3'>
                         <button
                             onClick={addProduct}
