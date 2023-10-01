@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import MyContext from './myContext';
-import { fireDb } from '../../firebase/firebaseConfig';
+import { fireDB } from '../../firebase/FirebaseConfig';
 import { Timestamp, addDoc, collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 
@@ -43,11 +43,14 @@ function MyState(props) {
     if (products.title == null || products.price == null || products.imageUrl == null || products.category == null || products.description == null) {
       return toast.error('Please fill all fields')
     }
-    const productRef = collection(fireDb, "products")
+    const productRef = collection(fireDB, "products")
     setLoading(true)
     try {
       await addDoc(productRef, products)
       toast.success("Product Add successfully")
+      setTimeout(() => {
+        window.location.href = "/dashboard"
+      }, 800);
       getProductData()
       setLoading(false)
     } catch (error) {
@@ -64,7 +67,7 @@ function MyState(props) {
     setLoading(true)
     try {
       const q = query(
-        collection(fireDb, "products"),
+        collection(fireDB, "products"),
         orderBy("time"),
         // limit(5)
       );
@@ -91,7 +94,7 @@ function MyState(props) {
   return (
     <MyContext.Provider value={{ 
       mode, toggleMode, loading,setLoading,
-      products, setProducts,addProduct }}>
+      products, setProducts,addProduct,product }}>
       {props.children}
     </MyContext.Provider>
   )
