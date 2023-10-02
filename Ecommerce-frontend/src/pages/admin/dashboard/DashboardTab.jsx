@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 function DashboardTab() {
     const context = useContext(myContext)
-    const { mode, product, edithandle,deleteProduct,order } = context
+    const { mode, product, edithandle,deleteProduct,order,user } = context
 
     // console.log(product)
     let [isOpen, setIsOpen] = useState(false)
@@ -261,10 +261,10 @@ function DashboardTab() {
                                            
                                         </tr>
                                     </thead>
-                                   {/* {user.map((item,index)=>{
+                                   {user.map((item,index)=>{
                                     const {name,uid,email,date} = item;
                                     return(
-                                        <tbody>
+                                        <tbody key={index}>
                                         <tr className="bg-gray-50 border-b  dark:border-gray-700" style={{ backgroundColor: mode === 'dark' ? 'rgb(46 49 55)' : '', color: mode === 'dark' ? 'white' : '', }} >
                                             <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
                                                {index + 1}.
@@ -282,7 +282,7 @@ function DashboardTab() {
                                         </tr>
                                     </tbody>
                                     )
-                                   })} */}
+                                   })}
                                 </table>
                             </div>
                         </TabPanel>
