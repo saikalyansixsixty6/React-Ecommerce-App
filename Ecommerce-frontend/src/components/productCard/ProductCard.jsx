@@ -19,7 +19,7 @@ function ProductCard() {
 
     const addCart = (product) =>{
          dispatch(addToCart(product))
-         toast.success("add to cart")
+         toast.success("Product Added to Cart")
     }
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cartItems));
