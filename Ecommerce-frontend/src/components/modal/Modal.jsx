@@ -1,9 +1,12 @@
 import { Dialog, Transition } from '@headlessui/react'
+
 import { Fragment, useState } from 'react'
+import { useSelector } from 'react-redux'
 
 export default function Modal({ name, address, pincode, phoneNumber, setName, setAddress, setPincode, setPhoneNumber, buyNow }) {
     let [isOpen, setIsOpen] = useState(false)
-
+     const cartItems = useSelector((state)=>state.cart)
+     console.log(cartItems)
     function closeModal() {
         setIsOpen(false)
     }
@@ -76,7 +79,8 @@ export default function Modal({ name, address, pincode, phoneNumber, setName, se
                                                         </div>
 
                                                     </form>
-                                                    <button onClick={()=>{buyNow(); closeModal()}} type="button" className="focus:outline-none w-full text-white bg-violet-600 hover:bg-violet-800  outline-0 font-medium rounded-lg text-sm px-5 py-2.5 ">Order Now</button>
+                                                    
+                                                    {cartItems.length>0 ?(<button onClick={()=>{buyNow(); closeModal()}} type="button" className="focus:outline-none w-full text-white bg-violet-600 hover:bg-violet-800  outline-0 font-medium rounded-lg text-sm px-5 py-2.5 ">Order Now</button>):""}
                                                 </div>
                                             </div>
                                         </div>

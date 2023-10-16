@@ -4,7 +4,7 @@
 import { useContext, useEffect } from 'react'
 import myContext from '../../context/data/myContext'
 import {useDispatch, useSelector} from "react-redux"
-import { addToCart } from '../../redux/cartSlice'
+import { addToCart, deleteFromCart } from '../../redux/cartSlice'
 import {toast} from "react-toastify"
 
 function ProductCard() {
@@ -21,6 +21,12 @@ function ProductCard() {
          dispatch(addToCart(product))
          toast.success("Product Added to Cart")
     }
+    
+    const removeFromCart = (product) =>{
+        dispatch(deleteFromCart(product))
+        toast.success("Product removed from Cart")
+    }
+
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cartItems));
     }, [cartItems])
@@ -51,10 +57,24 @@ function ProductCard() {
                                 <h1 className="title-font text-lg font-medium text-gray-900 mb-3" style={{ color: mode === 'dark' ? 'white' : '', }}>{title}</h1>
                                 {/* <p className="leading-relaxed mb-3">{item.description.}</p> */}
                                 <p className="leading-relaxed mb-3" style={{ color: mode === 'dark' ? 'white' : '' }}>₹ {price}</p>
-                                <div className=" flex justify-center">
+                                {/* <div className=" flex justify-center">
+                                    <button onClick={() =>addCart(item)} type="button" className="focus:outline-none text-white bg-pink-600 hover:bg-pink-700 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm w-full  py-2">Add To Cart</button>
+
+                                </div> */}
+                                {
+                                    cartItems.includes(item) ? (
+                                        <div className=" flex justify-center">
+                                    <button onClick={() =>removeFromCart(item)} type="button" className="focus:outline-none text-white bg-pink-600 hover:bg-pink-700 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm w-full  py-2">Remove From Cart</button>
+
+                                </div>
+
+                                    ):(
+                                        <div className=" flex justify-center">
                                     <button onClick={() =>addCart(item)} type="button" className="focus:outline-none text-white bg-pink-600 hover:bg-pink-700 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm w-full  py-2">Add To Cart</button>
 
                                 </div>
+                                    )
+                                }
                             </div>
 
                         </div>
