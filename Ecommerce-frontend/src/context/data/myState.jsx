@@ -3,6 +3,8 @@ import MyContext from './myContext';
 import { fireDB } from '../../firebase/FirebaseConfig';
 import { Timestamp, addDoc, collection, deleteDoc, doc, getDocs, onSnapshot, orderBy, query, setDoc } from 'firebase/firestore';
 import { toast } from 'react-toastify';
+import axios from 'axios';
+import { ALL_PRODUCTS_API, GET_ALL_CATEGORIES } from '../../utils/constants';
 
 
 
@@ -167,20 +169,57 @@ function MyState(props) {
       setLoading(false)
     }
   }
+ 
+  const getAllCategories = async ()=>{
+    try{
+        const response = await axios(GET_ALL_CATEGORIES)
+        setAllCategories(response.data)
+        
+    }
+    catch(e){
+        console.log(e);
+    }
+    
+   }
+   
+
+   const getAllProducts = async ()=>{
+    try{
+       const response = await axios(ALL_PRODUCTS_API);
+       setAllProducts(response.data.products)
+       
+       console.log(allProducts)
+
+    }catch(e){
+       console.log(e)
+    }
+}
+
+
+
+
+
+
 
   useEffect(() => {
     getProductData();
     getOrderData();
     getUserData();
+    getAllCategories();
+    getAllProducts();
   }, []);
 
-  const [searchkey, setSearchkey] = useState('')
-  const [filterType, setFilterType] = useState('')
-  const [filterPrice, setFilterPrice] = useState('')
+  
+
+  const [searchkey, setSearchkey] = useState('');
+  const [filterType, setFilterType] = useState('');
+  const [filterPrice, setFilterPrice] = useState('');
+  const [allCategories,setAllCategories] = useState([]);
+  const [allProducts,setAllProducts] = useState([]);
   return (
     <MyContext.Provider value={{ 
       mode, toggleMode, loading,setLoading,
-      products, setProducts,addProduct,product,edithandle,updateProduct,deleteProduct,order,user,searchkey,setSearchkey,filterType,setFilterType,filterPrice,setFilterPrice}}>
+      products, setProducts,addProduct,product,edithandle,updateProduct,deleteProduct,order,user,searchkey,setSearchkey,filterType,setFilterType,filterPrice,setFilterPrice,allCategories,setAllCategories,allProducts,setAllProducts}}>
       {props.children}
     </MyContext.Provider>
   )

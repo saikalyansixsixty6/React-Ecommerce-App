@@ -1,14 +1,14 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import myContext from '../../../context/data/myContext';
 import { MdOutlineProductionQuantityLimits } from 'react-icons/md'
 import { FaUser, FaCartPlus } from 'react-icons/fa';
-import { AiFillShopping, AiFillPlusCircle, AiFillDelete } from 'react-icons/ai';
+import { AiFillShopping } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
 function DashboardTab() {
     const context = useContext(myContext)
-    const { mode, product, edithandle,deleteProduct,order,user } = context
+    const { mode,edithandle,deleteProduct,order,user,allProducts } = context
 
     // console.log(product)
     let [isOpen, setIsOpen] = useState(false)
@@ -89,8 +89,8 @@ function DashboardTab() {
                                                 </th>
                                             </tr>
                                         </thead>
-                                        {product.map((item, index) => {
-                                            const { title, price, imageUrl, category, description, date } = item;
+                                        {allProducts.map((item, index) => {
+                                            const { title, price, images, category, date } = item;
                                             return (
                                                 <tbody className='' key={index}>
                                                     <tr className="bg-gray-50 border-b  dark:border-gray-700" style={{ backgroundColor: mode === 'dark' ? 'rgb(46 49 55)' : '', color: mode === 'dark' ? 'white' : '', }} >
@@ -98,7 +98,7 @@ function DashboardTab() {
                                                             {index + 1}.
                                                         </td>
                                                         <th scope="row" className="px-6 py-4 font-medium text-black whitespace-nowrap">
-                                                            <img className='w-16' src={imageUrl} alt="img" />
+                                                            <img className='w-16' src={images[0]} alt="img" />
                                                         </th>
                                                         <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
                                                             {title}
@@ -189,7 +189,7 @@ function DashboardTab() {
                                     </thead>
                                     {allorder.cartItems.map((item,index)=>{
                                         // console.log(allorder)
-                                        const {title,description,category,imageUrl,price} = item;
+                                        const {title,category,images,price} = item;
                                         return(
                                             <tbody key={index}>
                                         <tr  className="bg-gray-50 border-b  dark:border-gray-700" style={{ backgroundColor: mode === 'dark' ? 'rgb(46 49 55)' : '', color: mode === 'dark' ? 'white' : '', }} >
@@ -197,7 +197,7 @@ function DashboardTab() {
                                                 {allorder.paymentId}
                                             </td>
                                             <th scope="row" className="px-6 py-4 font-medium text-black whitespace-nowrap">
-                                                <img className='w-16' src={imageUrl} alt="img" />
+                                                <img className='w-16' src={images[0]} alt="img" />
                                             </th>
                                             <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
                                                 {title}

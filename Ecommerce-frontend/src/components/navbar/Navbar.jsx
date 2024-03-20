@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { Dialog, Transition } from '@headlessui/react'
 import { RxCross2 } from 'react-icons/rx'
 import { useSelector } from 'react-redux';
+// import { auth } from '../../firebase/FirebaseConfig';
 
 function Navbar() {
   const context = useContext(myContext);
@@ -14,8 +15,10 @@ function Navbar() {
   const [open, setOpen] = useState(false)
 
   const user = JSON.parse(localStorage.getItem('user'));
+  console.log(user)
+  // console.log("auth",auth)
 
-  // console.log(user.user.email)
+  console.log(user.user.email.split("@")[0])
 
   const logout = () => {
     localStorage.clear('user');
@@ -178,12 +181,8 @@ function Navbar() {
                   </a>
                 </div>
                 <div className="hidden lg:ml-8 lg:flex">
-                  <a href="#" className="flex items-center text-gray-700 ">
-                    <img
-                      className="inline-block w-10 h-10 rounded-full"
-                      src="https://overreacted.io/static/profile-pic-c715447ce38098828758e525a1128b87.jpg"
-                      alt="Dan_Abromov" />
-                  </a>
+                    <h2>Welcome,{user?.user?.email.split("@")[0].toUpperCase()}</h2>
+                    
                 </div>
 
                 <div className="flex lg:ml-6">
